@@ -66,7 +66,7 @@
       <WarningLevel>Level3</WarningLevel>
     <MultiProcessorCompilation>true</MultiProcessorCompilation></ClCompile>
     <Link>
-      <AdditionalDependencies>"E:\Windows Kits\10\lib\10.0.17763.0\um\x86\dwmapi.lib";"E:\Windows Kits\10\lib\10.0.17763.0\um\x86\gdi32.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dwmapi.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>.;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -106,7 +106,7 @@
       <WarningLevel>Level3</WarningLevel>
     <MultiProcessorCompilation>true</MultiProcessorCompilation></ClCompile>
     <Link>
-      <AdditionalDependencies>"E:\Windows Kits\10\lib\10.0.17763.0\um\x86\dwmapi.lib";"E:\Windows Kits\10\lib\10.0.17763.0\um\x86\gdi32.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dwmapi.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>.;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
