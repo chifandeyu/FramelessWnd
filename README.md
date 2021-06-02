@@ -1,3 +1,3 @@
 # FramelessWnd
 Qt frameless window customization
-![image](https://user-images.githubusercontent.com/15946864/120373591-1cea1b00-c34b-11eb-97ae-89ba5bbf32e3.png)
+![image](https://user-images.githubusercontent.com/15946864/120525075-52097280-c40a-11eb-8da4-8d067110d353.png)
