@@ -7,12 +7,12 @@
 HWND WinNativeWindow::childWindow = nullptr;
 QWidget* WinNativeWindow::childWidget = nullptr;
 
-WinNativeWindow::WinNativeWindow(const int x, const int y, const int width, const int height)
+WinNativeWindow::WinNativeWindow(const int x, const int y, const int width, const int height, QString name)
     : hWnd(nullptr)
 {
 	//The native window technically has a background color. You can set it here
     HBRUSH windowBackground = CreateSolidBrush(RGB(255, 255, 255));
-
+    LPCWSTR _cn = (LPCWSTR)name.utf16();
     HINSTANCE hInstance = GetModuleHandle(nullptr);
     WNDCLASSEX wcx = { 0 };
 
@@ -33,7 +33,7 @@ WinNativeWindow::WinNativeWindow(const int x, const int y, const int width, cons
     }
 
     //Create a native window with the appropriate style
-    hWnd = CreateWindow(L"WindowClass", L"WindowTitle", aero_borderless, x, y, width, height, 0, 0, hInstance, nullptr);
+    hWnd = CreateWindow(L"WindowClass", _cn/*L"WindowTitle"*/, aero_borderless, x, y, width, height, 0, 0, hInstance, nullptr);
     if (!hWnd)
     {
         throw std::runtime_error("couldn't create window because of reasons");

@@ -59,22 +59,28 @@ class WinNativeWindow;
 class QHBoxLayout;
 class QVBoxLayout;
 class QPushButton;
+class QLabel;
 
 class FRAMELESSWND_EXPORT FramelessWnd : public QWidget
 {
     Q_OBJECT
 public:
-    FramelessWnd();
-    FramelessWnd(QWidget *contentWidget);
+    FramelessWnd(QString name = "");
+    FramelessWnd(QWidget *contentWidget, QString name = "");
     virtual ~FramelessWnd();
 
+    void setTitle(const QString& title);
     void setTitleStyle(const QString &qss);
     void show();
     void center();
     void showCentered();
     void setGeometry(int x, int y, int w, int h);
     HWND getParentWindow() const;
+    QHBoxLayout* getTitleLayout() const;
     QWidget *getCentralwidget() const;
+    QPushButton* getMaximizeButton() const;
+    QPushButton* getMinimizeButton() const;
+    QPushButton* getCloseButton() const;
 
 public slots:
     void onMaximizeButtonClicked();
@@ -88,7 +94,7 @@ protected:
     void focusInEvent(QFocusEvent *e) override;
     bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
     void setupUI();
-    void initUI();
+    void initUI(const QString& name);
 
 private:
 
@@ -96,6 +102,7 @@ private:
     QPushButton* maximizeBtn = nullptr;
     QPushButton* minimizeBtn = nullptr;
     QPushButton* closeBtn = nullptr;
+    QLabel* titleLabel = nullptr;
 
     //If you want to enable dragging the window when the mouse is over top of, say, a QToolBar,
     //then look at how QWinWidget uses this

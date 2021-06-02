@@ -109,6 +109,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="wnd.h" />
+    <QtMoc Include="include\framelesswnd.h" />
     <ClInclude Include="titleBarStyle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

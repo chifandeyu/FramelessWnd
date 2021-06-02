@@ -1,16 +1,6 @@
 
 #include <QtWidgets/QApplication>
-
-#ifdef _WIN32
-#include "FramelessWnd.h"
-#else
-#include "widget.h"
-#endif
-
-#ifdef __APPLE__
-#include "OSXHideTitleBar.h"
-#endif
-
+#include "wnd.h"
 #include "titleBarStyle.h"
 
 int main(int argc, char *argv[])
@@ -28,7 +18,8 @@ int main(int argc, char *argv[])
     QWidget *appWidget = new QWidget();
     appWidget->setObjectName("appWidget");
     appWidget->setStyleSheet("QWidget#appWidget{background:rgb(44,66,88);}");
-    FramelessWnd wnd(appWidget);
+
+    FramelessWnd wnd(appWidget, QStringLiteral("Testapp desktop"));
     wnd.setTitleStyle(getTitleBarQSS());
     //A common feature is to save your app's geometry on close such that you can draw in the same place on relaunch
     //Thus this project supports specifying the X/Y/Width/Height in a cross-platform manner
@@ -39,5 +30,6 @@ int main(int argc, char *argv[])
     //windowHeight = 768;
     //wnd.setGeometry(windowXPos, windowYPos, windowWidth, windowHeight);
     wnd.show();
+    //wnd.setTitle(QStringLiteral("Hello desktop"));
     return a.exec();
 }

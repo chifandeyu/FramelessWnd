@@ -8,7 +8,7 @@
 class WinNativeWindow
 {
 public:
-    WinNativeWindow(const int x, const int y, const int width, const int height);
+    WinNativeWindow(const int x, const int y, const int width, const int height, QString name);
     ~WinNativeWindow();
 
     static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

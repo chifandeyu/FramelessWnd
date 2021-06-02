@@ -78,7 +78,7 @@
     functionality, and gradually replace the existing interface.
 */
 
-FramelessWnd::FramelessWnd()
+FramelessWnd::FramelessWnd(QString name)
     : QWidget(nullptr),
       winLayout(nullptr),
       centralwidget(nullptr),
@@ -86,10 +86,10 @@ FramelessWnd::FramelessWnd()
       _prevFocus(nullptr),
       _reenableParent(false)
 {
-    initUI();
+    initUI(name);
 }
 
-FramelessWnd::FramelessWnd(QWidget *contentWidget)
+FramelessWnd::FramelessWnd(QWidget *contentWidget, QString name)
     : centralwidget(contentWidget),
     QWidget(nullptr),
     winLayout(nullptr),
@@ -97,13 +97,12 @@ FramelessWnd::FramelessWnd(QWidget *contentWidget)
     _prevFocus(nullptr),
     _reenableParent(false)
 {
-    initUI();
+    initUI(name);
 }
 
 void FramelessWnd::setupUI()
 {
     //Windows example of adding a toolbar + min/max/close buttons
-#ifdef _WIN32
 
     //Add the titleBar
     titleBar = new QWidget(this);
@@ -125,16 +124,8 @@ void FramelessWnd::setupUI()
     titleHLayout->setSpacing(0);
     titleHLayout->setMargin(0);
 
-    //Create a transparent-to-mouse-events widget that pads right for a fixed width equivalent to min/max/close buttons
-    QWidget* btnSpacer = new QWidget(titleBar);
-    btnSpacer->setAttribute(Qt::WA_TransparentForMouseEvents);
-    btnSpacer->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    btnSpacer->setStyleSheet("background-color: none; border: none;");
-    btnSpacer->setFixedWidth(135 /* rough width of close/min/max buttons */);
-    titleHLayout->addWidget(btnSpacer);
-
     //Create a title label just because
-    QLabel* titleLabel = new QLabel("TrueFramelessWindow");
+    titleLabel = new QLabel();
     titleLabel->setObjectName("titleLabel");
     //	titleLabel->setFixedWidth(160);
     titleLabel->setStyleSheet("color: #ffffff;");
@@ -153,18 +144,16 @@ void FramelessWnd::setupUI()
     titleHLayout->addWidget(closeBtn);
     //An actual app should use icons for the buttons instead of text
     //and style the different button states / widget margins in css
-
-#endif
-
 }
 
-void FramelessWnd::initUI()
+void FramelessWnd::initUI(const QString &name)
 {
     //Create a native window and give it geometry values * devicePixelRatio for HiDPI support
     p_ParentWinNativeWindow = new WinNativeWindow(1  * window()->devicePixelRatio()
         , 1 * window()->devicePixelRatio()
         , 1 * window()->devicePixelRatio()
-        , 1 * window()->devicePixelRatio());
+        , 1 * window()->devicePixelRatio()
+        , name.isEmpty() ? QString(QApplication::applicationName()) : name);
 
     //If you want to set a minimize size for your app, do so here
     //p_ParentWinNativeWindow->setMinimumSize(1024 * window()->devicePixelRatio(), 768 * window()->devicePixelRatio());
@@ -251,6 +240,15 @@ FramelessWnd::~FramelessWnd()
 
 }
 
+void FramelessWnd::setTitle(const QString& title)
+{
+    titleLabel->setText(title);
+    if (m_ParentNativeWindowHandle) {
+        LPCWSTR _cn = (LPCWSTR)title.utf16();
+        SetWindowTextW(m_ParentNativeWindowHandle, _cn);
+    }
+}
+
 void FramelessWnd::setTitleStyle(const QString &qss)
 {
     if (titleBar) {
@@ -266,9 +264,29 @@ HWND FramelessWnd::getParentWindow() const
     return m_ParentNativeWindowHandle;
 }
 
+QHBoxLayout* FramelessWnd::getTitleLayout() const
+{
+    return titleHLayout;
+}
+
 QWidget *FramelessWnd::getCentralwidget() const
 {
     return centralwidget;
+}
+
+QPushButton* FramelessWnd::getMaximizeButton() const
+{
+    return maximizeBtn;
+}
+
+QPushButton* FramelessWnd::getMinimizeButton() const
+{
+    return minimizeBtn;
+}
+
+QPushButton* FramelessWnd::getCloseButton() const
+{
+    return closeBtn;
 }
 
 /*!
