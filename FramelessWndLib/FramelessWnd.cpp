@@ -422,7 +422,11 @@ void FramelessWnd::onCloseButtonClicked()
     }
 }
 
-bool FramelessWnd::nativeEvent(const QByteArray &, void *message, long *result)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+bool FramelessWnd::nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
+#else
+bool FramelessWnd::nativeEvent(const QByteArray &eventType, void *message, long *result)
+#endif
 {
     MSG *msg = (MSG *)message;
 

@@ -39,7 +39,8 @@ win32 {
         winnativewindow.h
 
     LIBS += -ldwmapi \
-        -lgdi32
+        -lgdi32 \
+        -luser32
 }
 
 mac {
